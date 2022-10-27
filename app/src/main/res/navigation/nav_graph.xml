@@ -7,19 +7,19 @@
     <fragment
         android:id="@+id/characterFragment"
         android:label="Characters"
-        android:name="com.example.ricknmorty.characters.CharactersFragment"
+        android:name="com.example.ricknmorty.ui.characters.CharactersFragment"
         tools:layout="@layout/fragment_character"
         />
     <fragment
         android:id="@+id/episodeFragment"
         android:label="Episode"
-        android:name="com.example.ricknmorty.characters.EpisodeFragment"
+        android:name="com.example.ricknmorty.ui.characters.EpisodeFragment"
         tools:layout="@layout/fragment_episode"
         />
     <fragment
         android:id="@+id/locationFragment"
         android:label="Locations"
-        android:name="com.example.ricknmorty.characters.LocationFragment"
+        android:name="com.example.ricknmorty.ui.characters.LocationFragment"
         tools:layout="@layout/fragment_locations"
         />
 

@@ -8,7 +8,7 @@
     app:strokeColor="@color/purple_200"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:padding="8dp"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <ImageView
@@ -33,7 +33,6 @@
                 android:background="@color/black"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
@@ -52,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/status_image"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:padding="12dp"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/text_name"
