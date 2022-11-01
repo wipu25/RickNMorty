@@ -1,29 +1,28 @@
 package com.example.ricknmorty.ui.characters
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.ricknmorty.arch.AppViewModel
-import com.example.ricknmorty.databinding.FragmentCharacterBinding
+import com.example.ricknmorty.arch.CharacterViewModel
+import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 
 
-class CharactersFragment: Fragment() {
+class CharactersListFragment: Fragment() {
 
     //use binding for ease of getting widget
-    private var _binding : FragmentCharacterBinding? = null
+    private var _binding : FragmentCharactersListBinding? = null
     private val  binding get() = _binding!!
-    private val sharedViewModel: AppViewModel by activityViewModels()
+    private val sharedViewModel: CharacterViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCharacterBinding.inflate(inflater,container,false)
+        _binding = FragmentCharactersListBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -31,8 +30,8 @@ class CharactersFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val characterEpoxyController = CharacterEpoxyController()
         binding.epoxyCharacters.setController(characterEpoxyController)
-        sharedViewModel.characterList.observe(viewLifecycleOwner) {
-                characterList -> characterEpoxyController.submitList()
+        sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
+                characterList -> characterEpoxyController.submitList(characterList)
         }
     }
 

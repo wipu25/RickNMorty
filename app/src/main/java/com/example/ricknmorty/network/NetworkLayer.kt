@@ -7,28 +7,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
+import retrofit2.http.Query
 
-class NetworkLayer {
-    private var retrofit : Retrofit? = null
+object NetworkLayer {
     private val baseUrl : String = "https://rickandmortyapi.com/"
-    private var apiInterface : APIInterface? = null
-
-    init {
-        retrofit = Retrofit
+    val retrofit: Retrofit = Retrofit
             .Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        apiInterface = retrofit!!.create(APIInterface::class.java)
-    }
-
-    suspend fun getCharacter(): Response<CharacterInfo> {
-       return apiInterface!!.getCharacter()
-    }
-
-    suspend fun getAllCharacter(): Response<AllCharacters> {
-        return apiInterface!!.getAllCharacter()
-    }
+    val apiInterface: APIInterface = retrofit.create(APIInterface::class.java)
+    val apiClient = APIClient(apiInterface)
 }
 
 interface APIInterface {
@@ -36,5 +25,5 @@ interface APIInterface {
     suspend fun getCharacter() : Response<CharacterInfo>
 
     @GET("api/character")
-    suspend fun getAllCharacter() : Response<AllCharacters>
+    suspend fun getCharacterByPage(@Query("page") page: Int) : Response<AllCharacters>
 }

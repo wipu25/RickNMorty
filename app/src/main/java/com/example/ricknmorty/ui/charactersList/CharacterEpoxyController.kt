@@ -7,12 +7,6 @@ import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.response.CharacterInfo
 
 class CharacterEpoxyController : PagedListEpoxyController<CharacterInfo>() {
-
-    var charactersList: List<CharacterInfo>? = null
-        set(value) {
-            field = value
-        }
-
     override fun buildItemModel(currentPosition: Int, item: CharacterInfo?): EpoxyModel<*> {
         item?.let {
             //Movie Item View Model

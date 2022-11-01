@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.example.ricknmorty.arch.AppViewModel
+import com.example.ricknmorty.arch.CharacterViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val viewModel: AppViewModel by viewModels()
+        val viewModel: CharacterViewModel by viewModels()
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_nav)
         setupWithNavController(bottomNavigation, navController)

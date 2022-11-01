@@ -1,4 +1,4 @@
-package com.example.ricknmorty.ui.characters
+package com.example.ricknmorty.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
