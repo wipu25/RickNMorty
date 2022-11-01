@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.ricknmorty.R
 import com.example.ricknmorty.arch.CharacterViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 
@@ -28,11 +30,15 @@ class CharactersListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterEpoxyController = CharacterEpoxyController()
+        val characterEpoxyController = CharacterEpoxyController { navigateToCharacterDetails() }
         binding.epoxyCharacters.setController(characterEpoxyController)
         sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
                 characterList -> characterEpoxyController.submitList(characterList)
         }
+    }
+
+    private fun navigateToCharacterDetails() {
+        findNavController().navigate(R.id.action_character_list_to_character_details)
     }
 
     override fun onDestroy() {

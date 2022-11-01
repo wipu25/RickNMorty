@@ -6,11 +6,11 @@ import com.example.ricknmorty.models.CharacterEpoxyModel
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.response.CharacterInfo
 
-class CharacterEpoxyController : PagedListEpoxyController<CharacterInfo>() {
+class CharacterEpoxyController(private val onNavigateItem : () -> Unit) : PagedListEpoxyController<CharacterInfo>() {
     override fun buildItemModel(currentPosition: Int, item: CharacterInfo?): EpoxyModel<*> {
         item?.let {
             //Movie Item View Model
-            return CharacterEpoxyModel(it).id(it.id)
+            return CharacterEpoxyModel(it,onNavigateItem).id(it.id)
 
         } ?: run {
             //Loading View Model

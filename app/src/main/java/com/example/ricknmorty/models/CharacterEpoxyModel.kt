@@ -6,9 +6,11 @@ import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.squareup.picasso.Picasso
 
-data class CharacterEpoxyModel(val characterInfo: CharacterInfo) : ViewBindingKotlinModel<ModelCharacterItemBinding>(R.layout.model_character_item) {
+data class CharacterEpoxyModel(val characterInfo: CharacterInfo,val onNavigateItem: () -> Unit) : ViewBindingKotlinModel<ModelCharacterItemBinding>(R.layout.model_character_item) {
     override fun ModelCharacterItemBinding.bind() {
-
+        root.setOnClickListener{
+            onNavigateItem.invoke()
+        }
         textName.text = characterInfo.name
         textStatus.text = characterInfo.status
         Picasso.get().load(characterInfo.image).into(profileImage)

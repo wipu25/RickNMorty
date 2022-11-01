@@ -1,20 +1,15 @@
 package com.example.ricknmorty.arch
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.ricknmorty.models.response.AllCharacters
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.network.CharacterRepository
-import com.example.ricknmorty.network.NetworkLayer
-import com.example.ricknmorty.ui.characters.CharacterDataSourceFactory
-import kotlinx.coroutines.launch
+import com.example.ricknmorty.ui.charactersList.CharacterDataSourceFactory
 
-class CharacterViewModel: ViewModel() {
+class CharacterViewModel(): ViewModel() {
     private var repository: CharacterRepository = CharacterRepository()
     private val pageListConfig: PagedList.Config = PagedList.Config.Builder()
         .setPageSize(20)
