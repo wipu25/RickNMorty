@@ -1,6 +1,7 @@
 package com.example.ricknmorty.network
 
 import com.example.ricknmorty.models.response.AllCharacters
+import com.example.ricknmorty.models.response.AllLocations
 import com.example.ricknmorty.models.response.CharacterInfo
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -10,7 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 object NetworkLayer {
-    private val baseUrl : String = "https://rickandmortyapi.com/"
+    private val baseUrl : String = "https://rickandmortyapi.com/api/"
     val retrofit: Retrofit = Retrofit
             .Builder()
             .baseUrl(baseUrl)
@@ -21,9 +22,12 @@ object NetworkLayer {
 }
 
 interface APIInterface {
-    @GET("api/character/2")
+    @GET("character/2")
     suspend fun getCharacter() : Response<CharacterInfo>
 
-    @GET("api/character")
+    @GET("character")
     suspend fun getCharacterByPage(@Query("page") page: Int) : Response<AllCharacters>
+
+    @GET("location")
+    suspend fun getAllLocations() : Response<AllLocations>
 }

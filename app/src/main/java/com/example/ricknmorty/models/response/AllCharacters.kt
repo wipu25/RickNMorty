@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 data class AllCharacters (
     @SerializedName("info")
-    val info: AllCharactersInfo,
+    val info: PageInfo,
     @SerializedName("results")
     val charactersList :List<CharacterInfo>
         )
 
-data class AllCharactersInfo (
+data class PageInfo (
     @SerializedName("count")
     val count: Int,
     @SerializedName("pages")

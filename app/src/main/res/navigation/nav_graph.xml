@@ -11,15 +11,14 @@
         tools:layout="@layout/fragment_characters_list">
         <action
             android:id="@+id/action_character_list_to_character_details"
-            app:destination="@id/characterDetailFragment"
-            />
+            app:destination="@id/characterDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodeFragment"
         android:label="Episode"
         android:name="com.example.ricknmorty.ui.EpisodeFragment"
-        tools:layout="@layout/fragment_episode"
-        />
+        tools:layout="@layout/fragment_episode">
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
         android:label="Locations"
@@ -30,7 +29,11 @@
         android:id="@+id/characterDetailFragment"
         android:label="Character Profile"
         android:name="com.example.ricknmorty.ui.characters.CharacterDetailFragment"
-        tools:layout="@layout/fragment_character"
-        />
+        tools:layout="@layout/fragment_character">
+        <argument
+            android:name="characterInfo"
+            app:argType="com.example.ricknmorty.models.response.CharacterInfo"
+            />
+    </fragment>
 
 </navigation>

@@ -9,7 +9,7 @@ import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.network.CharacterRepository
 import com.example.ricknmorty.ui.charactersList.CharacterDataSourceFactory
 
-class CharacterViewModel(): ViewModel() {
+class RickNMortyViewModel(): ViewModel() {
     private var repository: CharacterRepository = CharacterRepository()
     private val pageListConfig: PagedList.Config = PagedList.Config.Builder()
         .setPageSize(20)

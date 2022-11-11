@@ -10,9 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.ricknmorty.R
 import com.example.ricknmorty.arch.CharacterViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
+import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.CharactersListInterface
 
 
-class CharactersListFragment: Fragment() {
+class CharactersListFragment: Fragment(), CharactersListInterface {
 
     //use binding for ease of getting widget
     private var _binding : FragmentCharactersListBinding? = null
@@ -30,19 +32,21 @@ class CharactersListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterEpoxyController = CharacterEpoxyController { navigateToCharacterDetails() }
+        val characterEpoxyController = CharacterEpoxyController(this)
         binding.epoxyCharacters.setController(characterEpoxyController)
         sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
                 characterList -> characterEpoxyController.submitList(characterList)
         }
     }
 
-    private fun navigateToCharacterDetails() {
-        findNavController().navigate(R.id.action_character_list_to_character_details)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onSelected(characterInfo: CharacterInfo) {
+        val directions = CharactersListFragmentDirections.actionCharacterListToCharacterDetails(characterInfo)
+        findNavController()
+            .navigate(directions)
     }
 }

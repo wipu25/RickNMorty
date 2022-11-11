@@ -4,12 +4,13 @@ import com.example.ricknmorty.R
 import com.example.ricknmorty.databinding.ModelCharacterItemBinding
 import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.CharactersListInterface
 import com.squareup.picasso.Picasso
 
-data class CharacterEpoxyModel(val characterInfo: CharacterInfo,val onNavigateItem: () -> Unit) : ViewBindingKotlinModel<ModelCharacterItemBinding>(R.layout.model_character_item) {
+data class CharacterEpoxyModel(val characterInfo: CharacterInfo,val charactersListInterface: CharactersListInterface) : ViewBindingKotlinModel<ModelCharacterItemBinding>(R.layout.model_character_item) {
     override fun ModelCharacterItemBinding.bind() {
         root.setOnClickListener{
-            onNavigateItem.invoke()
+            charactersListInterface.onSelected(characterInfo)
         }
         textName.text = characterInfo.name
         textStatus.text = characterInfo.status

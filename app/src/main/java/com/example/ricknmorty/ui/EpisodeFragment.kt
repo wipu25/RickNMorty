@@ -17,6 +17,7 @@ class EpisodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEpisodeBinding.inflate(inflater,container,false)
+
         return binding.root
     }
 

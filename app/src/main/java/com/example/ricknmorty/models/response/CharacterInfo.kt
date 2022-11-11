@@ -1,7 +1,10 @@
 package com.example.ricknmorty.models.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CharacterInfo(
     @SerializedName("id")
     val id: Long,
@@ -16,9 +19,9 @@ data class CharacterInfo(
     @SerializedName("gender")
     val gender: String,
     @SerializedName("origin")
-    val origin: Location,
+    val origin: CharacterLocation,
     @SerializedName("location")
-    val location: Location,
+    val location: CharacterLocation,
     @SerializedName("image")
     val image: String,
     @SerializedName("episode")
@@ -27,11 +30,12 @@ data class CharacterInfo(
     val url: String,
     @SerializedName("created")
     val created: String
-)
+) : Parcelable
 
-data class Location(
+@Parcelize
+data class CharacterLocation(
     @SerializedName("name")
     val name: String,
     @SerializedName("url")
     val url: String
-)
+) : Parcelable

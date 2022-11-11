@@ -5,12 +5,13 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.models.CharacterEpoxyModel
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.CharactersListInterface
 
-class CharacterEpoxyController(private val onNavigateItem : () -> Unit) : PagedListEpoxyController<CharacterInfo>() {
+class CharacterEpoxyController(private val charactersListInterface : CharactersListInterface) : PagedListEpoxyController<CharacterInfo>() {
     override fun buildItemModel(currentPosition: Int, item: CharacterInfo?): EpoxyModel<*> {
         item?.let {
             //Movie Item View Model
-            return CharacterEpoxyModel(it,onNavigateItem).id(it.id)
+            return CharacterEpoxyModel(it,charactersListInterface).id(it.id)
 
         } ?: run {
             //Loading View Model
