@@ -3,6 +3,7 @@ package com.example.ricknmorty.ui.characters
 import com.airbnb.epoxy.EpoxyController
 import com.example.ricknmorty.R
 import com.example.ricknmorty.databinding.ModelCharacterDetailBinding
+import com.example.ricknmorty.databinding.ModelCharacterEpisodeBinding
 import com.example.ricknmorty.databinding.ModelCharacterHeaderBinding
 import com.example.ricknmorty.databinding.ModelCharacterProfileBinding
 import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
@@ -21,14 +22,15 @@ class CharacterDetailEpoxyController: EpoxyController() {
         if(characterInfo != null) {
             HeaderDetailEpoxyModel(characterInfo!!.name).id("name_${characterInfo!!.id}").addTo(this)
             ProfileImageEpoxyModel(characterInfo!!.image).id("image_${characterInfo!!.id}").addTo(this)
-            ProfileDetailEpoxyModel(characterInfo!!.gender,"Gender").id("gender_${characterInfo!!.gender}").addTo(this)
-            ProfileDetailEpoxyModel(characterInfo!!.species,"Species").id("gender_${characterInfo!!.gender}").addTo(this)
-            ProfileDetailEpoxyModel(characterInfo!!.created,"Created").id("gender_${characterInfo!!.gender}").addTo(this)
-            ProfileDetailEpoxyModel(characterInfo!!.location.name,"Location").id("gender_${characterInfo!!.gender}").addTo(this)
+            ProfileDetailEpoxyModel(characterInfo!!.gender,"Gender").id("gender_${characterInfo!!.id}").addTo(this)
+            ProfileDetailEpoxyModel(characterInfo!!.species,"Species").id("species_${characterInfo!!.id}").addTo(this)
+            ProfileDetailEpoxyModel(characterInfo!!.created,"Created").id("created_${characterInfo!!.id}").addTo(this)
+            ProfileDetailEpoxyModel(characterInfo!!.location.name,"Location").id("location_${characterInfo!!.id}").addTo(this)
             if(characterInfo!!.type.isNotEmpty()){
-                ProfileDetailEpoxyModel(characterInfo!!.type,"Type").id("gender_${characterInfo!!.gender}").addTo(this)
+                ProfileDetailEpoxyModel(characterInfo!!.type,"Type").id("type_${characterInfo!!.id}").addTo(this)
             }
-            ProfileDetailEpoxyModel(characterInfo!!.status,"Status").id("gender_${characterInfo!!.gender}").addTo(this)
+            ProfileDetailEpoxyModel(characterInfo!!.status,"Status").id("status_${characterInfo!!.id}").addTo(this)
+
         }
     }
 
@@ -48,6 +50,12 @@ class CharacterDetailEpoxyController: EpoxyController() {
         override fun ModelCharacterDetailBinding.bind() {
             textDetail.text = detail
             textTitle.text = title
+        }
+    }
+
+    data class CharacterEpisodeEpoxyModel() : ViewBindingKotlinModel<ModelCharacterEpisodeBinding>(R.layout.model_character_episode) {
+        override fun ModelCharacterEpisodeBinding.bind() {
+
         }
     }
 }

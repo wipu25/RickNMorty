@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.ricknmorty.R
-import com.example.ricknmorty.arch.CharacterViewModel
+import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.ui.charactersList.CharactersListInterface
@@ -19,7 +18,7 @@ class CharactersListFragment: Fragment(), CharactersListInterface {
     //use binding for ease of getting widget
     private var _binding : FragmentCharactersListBinding? = null
     private val  binding get() = _binding!!
-    private val sharedViewModel: CharacterViewModel by activityViewModels()
+    private val sharedViewModel: RickNMortyViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
