@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/episodeFragment"
         android:label="Episode"
-        android:name="com.example.ricknmorty.ui.EpisodeFragment"
+        android:name="com.example.ricknmorty.ui.episodes.EpisodeListFragment"
         tools:layout="@layout/fragment_episode">
     </fragment>
     <fragment

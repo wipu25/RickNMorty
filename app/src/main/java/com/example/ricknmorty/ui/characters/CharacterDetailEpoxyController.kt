@@ -1,7 +1,9 @@
 package com.example.ricknmorty.ui.characters
 
+import android.util.Log
 import com.airbnb.epoxy.EpoxyController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.GetEpisodeInterface
 import com.example.ricknmorty.databinding.ModelCharacterDetailBinding
 import com.example.ricknmorty.databinding.ModelCharacterEpisodeBinding
 import com.example.ricknmorty.databinding.ModelCharacterHeaderBinding
@@ -10,7 +12,7 @@ import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.squareup.picasso.Picasso
 
-class CharacterDetailEpoxyController: EpoxyController() {
+class CharacterDetailEpoxyController(private val characterEpisodeInterface: GetEpisodeInterface): EpoxyController() {
 
     var characterInfo : CharacterInfo? = null
         set(value) {
@@ -30,7 +32,7 @@ class CharacterDetailEpoxyController: EpoxyController() {
                 ProfileDetailEpoxyModel(characterInfo!!.type,"Type").id("type_${characterInfo!!.id}").addTo(this)
             }
             ProfileDetailEpoxyModel(characterInfo!!.status,"Status").id("status_${characterInfo!!.id}").addTo(this)
-
+            CharacterEpisodeEpoxyModel(characterInfo!!.episode,characterEpisodeInterface).id("episode_${characterInfo!!.id}").addTo(this)
         }
     }
 
@@ -53,9 +55,11 @@ class CharacterDetailEpoxyController: EpoxyController() {
         }
     }
 
-    data class CharacterEpisodeEpoxyModel() : ViewBindingKotlinModel<ModelCharacterEpisodeBinding>(R.layout.model_character_episode) {
+    data class CharacterEpisodeEpoxyModel(private val characterEpisode: List<String>,private val characterEpisodeInterface: GetEpisodeInterface) : ViewBindingKotlinModel<ModelCharacterEpisodeBinding>(R.layout.model_character_episode) {
         override fun ModelCharacterEpisodeBinding.bind() {
-
+            val characterEpisodeController = CharacterEpisodeController(characterEpisodeInterface)
+            characterEpisodeController.characterEpisode = characterEpisode
+            episodeList.setController(characterEpisodeController)
         }
     }
 }

@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.GetEpisodeInterface
+import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharacterBinding
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetailFragment : Fragment(), GetEpisodeInterface {
 
     private var _binding: FragmentCharacterBinding? = null
     private val args: CharacterDetailFragmentArgs by navArgs()
+    private val sharedViewModel: RickNMortyViewModel by activityViewModels()
 
     val binding get() = _binding!!
 
@@ -28,7 +32,7 @@ class CharacterDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterDetailEpoxyController = CharacterDetailEpoxyController()
+        val characterDetailEpoxyController = CharacterDetailEpoxyController(this)
         characterDetailEpoxyController.characterInfo = args.characterInfo
         binding.epoxyCharactersDetail.setController(characterDetailEpoxyController)
     }
@@ -36,5 +40,13 @@ class CharacterDetailFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun getEpisode(episodeNum: Int): Int? {
+        return sharedViewModel.getEpisode(episodeNum)
+    }
+
+    override fun getSeason(episodeNum: Int): Int? {
+        return sharedViewModel.getSeason(episodeNum)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.ricknmorty.network
 
 import com.example.ricknmorty.models.response.AllCharacters
+import com.example.ricknmorty.models.response.AllEpisodes
 import com.example.ricknmorty.models.response.AllLocations
 import com.example.ricknmorty.models.response.CharacterInfo
 
@@ -17,5 +18,9 @@ class CharacterRepository {
 
     suspend fun getAllLocation() : AllLocations {
         return networkLayer.apiClient!!.getAllLocations().body()!!
+    }
+
+    suspend fun getAllEpisode(page: Int): AllEpisodes {
+        return networkLayer.apiClient!!.getAllEpisodes(page).body()!!
     }
 }

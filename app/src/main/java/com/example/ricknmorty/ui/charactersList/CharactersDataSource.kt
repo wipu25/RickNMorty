@@ -1,8 +1,6 @@
-package com.example.ricknmorty.ui.characters
+package com.example.ricknmorty.ui.charactersList
 
-import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.example.ricknmorty.models.response.AllCharacters
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.network.CharacterRepository
 import kotlinx.coroutines.CoroutineScope

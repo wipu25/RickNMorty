@@ -1,11 +1,10 @@
-package com.example.ricknmorty.ui.characters
+package com.example.ricknmorty.ui.charactersList
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.models.CharacterEpoxyModel
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.response.CharacterInfo
-import com.example.ricknmorty.ui.charactersList.CharactersListInterface
 
 class CharacterEpoxyController(private val charactersListInterface : CharactersListInterface) : PagedListEpoxyController<CharacterInfo>() {
     override fun buildItemModel(currentPosition: Int, item: CharacterInfo?): EpoxyModel<*> {

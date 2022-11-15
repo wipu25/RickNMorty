@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.CharacterEpoxyController
 import com.example.ricknmorty.ui.charactersList.CharactersListInterface
 
 

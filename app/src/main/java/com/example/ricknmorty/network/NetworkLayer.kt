@@ -1,6 +1,7 @@
 package com.example.ricknmorty.network
 
 import com.example.ricknmorty.models.response.AllCharacters
+import com.example.ricknmorty.models.response.AllEpisodes
 import com.example.ricknmorty.models.response.AllLocations
 import com.example.ricknmorty.models.response.CharacterInfo
 import retrofit2.Response
@@ -30,4 +31,7 @@ interface APIInterface {
 
     @GET("location")
     suspend fun getAllLocations() : Response<AllLocations>
+
+    @GET("episode")
+    suspend fun getAllEpisodes(@Query("page") page: Int) : Response<AllEpisodes>
 }
