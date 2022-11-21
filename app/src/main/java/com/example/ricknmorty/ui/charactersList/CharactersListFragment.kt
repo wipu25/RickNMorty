@@ -1,12 +1,16 @@
 package com.example.ricknmorty.ui.characters
 
+import android.opengl.Visibility
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.ricknmorty.R
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
@@ -27,6 +31,7 @@ class CharactersListFragment: Fragment(), CharactersListInterface {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCharactersListBinding.inflate(inflater,container,false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -37,6 +42,32 @@ class CharactersListFragment: Fragment(), CharactersListInterface {
         sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
                 characterList -> characterEpoxyController.submitList(characterList)
         }
+
+        val menuHost: MenuHost = requireActivity()
+        // Add menu items without using the Fragment Menu APIs
+        // Note how we can tie the MenuProvider to the viewLifecycleOwner
+        // and an optional Lifecycle.State (here, RESUMED) to indicate when
+        // the menu should be visible
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.icon_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_filter-> {
+                        if(binding.filterSearch.visibility == View.GONE){
+                            binding.filterSearch.visibility = View.VISIBLE
+                        } else {
+                            binding.filterSearch.visibility = View.GONE
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDestroy() {

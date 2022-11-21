@@ -16,7 +16,7 @@ class CharactersDataSource(
     ) {
         coroutineScope.launch {
             val characterList = repository.getCharacterByPage(page = 1)
-            callback.onResult(characterList!!.charactersList, null,getPageIndexFromNext(characterList!!.info.next))
+            callback.onResult(characterList?.charactersList ?: emptyList(), null,getPageIndexFromNext(characterList?.info?.next))
         }
     }
 
@@ -27,7 +27,7 @@ class CharactersDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, CharacterInfo>) {
         coroutineScope.launch {
             val characterList = repository.getCharacterByPage(page = params.key)
-            callback.onResult(characterList!!.charactersList, params.key + 1)
+            callback.onResult(characterList?.charactersList ?: emptyList(), params.key + 1)
         }
     }
 

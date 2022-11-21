@@ -46,7 +46,7 @@ class CharacterDetailFragment : Fragment(), GetEpisodeInterface {
         return sharedViewModel.getEpisode(episodeNum)
     }
 
-    override fun getSeason(episodeNum: Int): Int? {
-        return sharedViewModel.getSeason(episodeNum)
-    }
+//    override fun getSeason(episodeNum: Int): Int? {
+//        return sharedViewModel.getSeason(episodeNum)
+//    }
 }

@@ -18,8 +18,8 @@ class APIClient(
         return apiInterface.getCharacter()
     }
 
-    suspend fun getAllLocations() : Response<AllLocations> {
-        return apiInterface.getAllLocations()
+    suspend fun getAllLocations(page: Int) : Response<AllLocations> {
+        return apiInterface.getAllLocations(page)
     }
 
     suspend fun getAllEpisodes(page: Int) : Response<AllEpisodes> {

@@ -7,9 +7,12 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.models.response.Episode
+import com.example.ricknmorty.models.response.Location
 import com.example.ricknmorty.network.CharacterRepository
 import com.example.ricknmorty.ui.charactersList.CharacterDataSourceFactory
 import com.example.ricknmorty.ui.episodes.EpisodeListDataSourceFactory
+import com.example.ricknmorty.ui.locations.LocationListDataSource
+import com.example.ricknmorty.ui.locations.LocationListDataSourceFactory
 
 class RickNMortyViewModel(): ViewModel() {
     private var repository: CharacterRepository = CharacterRepository()
@@ -24,6 +27,10 @@ class RickNMortyViewModel(): ViewModel() {
     private val episodeListDataSourceFactory = EpisodeListDataSourceFactory(viewModelScope, repository)
     val episodeListLiveData: LiveData<PagedList<Episode>> =
         LivePagedListBuilder(episodeListDataSourceFactory, pageListConfig).build()
+
+    private val locationListDataSourceFactory = LocationListDataSourceFactory(viewModelScope, repository)
+    val locationListLiveData: LiveData<PagedList<Location>> =
+        LivePagedListBuilder(locationListDataSourceFactory, pageListConfig).build()
 
     fun getEpisode(episodeNum: Int): Int? {
         return when {

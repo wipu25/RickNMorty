@@ -16,14 +16,14 @@ class EpisodeListDataSource (
     ) {
         coroutineScope.launch {
             val episodeList = repository.getAllEpisode(1)
-            callback.onResult(episodeList.results,null,getPageIndexFromNext(episodeList.info.next))
+            callback.onResult(episodeList?.results ?: emptyList(),null,getPageIndexFromNext(episodeList?.info?.next))
         }
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Episode>) {
         coroutineScope.launch {
             val episodeList = repository.getAllEpisode(page = params.key)
-            callback.onResult(episodeList.results,getPageIndexFromNext(episodeList.info.next))
+            callback.onResult(episodeList?.results ?: emptyList(),getPageIndexFromNext(episodeList?.info?.next))
         }
     }
 

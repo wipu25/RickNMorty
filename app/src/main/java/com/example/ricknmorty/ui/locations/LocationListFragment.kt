@@ -1,18 +1,16 @@
-package com.example.ricknmorty.ui.episodes
+package com.example.ricknmorty.ui.locations
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.ricknmorty.arch.GetEpisodeInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
-import com.example.ricknmorty.databinding.FragmentEpisodeBinding
+import com.example.ricknmorty.databinding.FragmentLocationsBinding
 
-class EpisodeListFragment : Fragment(), GetEpisodeInterface {
-    private var _binding : FragmentEpisodeBinding? = null
+class LocationListFragment : Fragment() {
+    private var _binding : FragmentLocationsBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: RickNMortyViewModel by activityViewModels()
 
@@ -21,15 +19,15 @@ class EpisodeListFragment : Fragment(), GetEpisodeInterface {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentEpisodeBinding.inflate(inflater,container,false)
+        _binding = FragmentLocationsBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val episodeListEpoxyController = EpisodeListEpoxyController(this)
-        binding.epoxyEpisodeList.setController(episodeListEpoxyController)
-        sharedViewModel.episodeListLiveData.observe(viewLifecycleOwner) {
-            episodeListEpoxyController.submitList(it)
+        val locationListEpoxyController = LocationListEpoxyController()
+        binding.locationEpoxy.setController(locationListEpoxyController)
+        sharedViewModel.locationListLiveData.observe(viewLifecycleOwner){
+            locationList -> locationListEpoxyController.submitList(locationList)
         }
         super.onViewCreated(view, savedInstanceState)
     }
@@ -37,9 +35,5 @@ class EpisodeListFragment : Fragment(), GetEpisodeInterface {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    override fun getEpisode(episodeNum: Int): Int? {
-        return sharedViewModel.getEpisode(episodeNum)
     }
 }

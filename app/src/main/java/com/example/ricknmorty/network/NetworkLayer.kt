@@ -30,7 +30,7 @@ interface APIInterface {
     suspend fun getCharacterByPage(@Query("page") page: Int) : Response<AllCharacters>
 
     @GET("location")
-    suspend fun getAllLocations() : Response<AllLocations>
+    suspend fun getAllLocations(@Query("page") page: Int) : Response<AllLocations>
 
     @GET("episode")
     suspend fun getAllEpisodes(@Query("page") page: Int) : Response<AllEpisodes>

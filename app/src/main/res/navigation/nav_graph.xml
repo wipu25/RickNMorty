@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/locationFragment"
         android:label="Locations"
-        android:name="com.example.ricknmorty.ui.LocationFragment"
+        android:name="com.example.ricknmorty.ui.locations.LocationListFragment"
         tools:layout="@layout/fragment_locations"
         />
     <fragment

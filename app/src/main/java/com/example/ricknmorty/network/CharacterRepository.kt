@@ -12,15 +12,15 @@ class CharacterRepository {
         return networkLayer.apiClient!!.getCharacterId(1).body()
     }
 
-    suspend fun getCharacterByPage(page: Int): AllCharacters {
-        return networkLayer.apiClient!!.getCharacterPage(page).body()!!
+    suspend fun getCharacterByPage(page: Int): AllCharacters? {
+        return networkLayer.apiClient!!.getCharacterPage(page).body()
     }
 
-    suspend fun getAllLocation() : AllLocations {
-        return networkLayer.apiClient!!.getAllLocations().body()!!
+    suspend fun getAllLocation(page: Int) : AllLocations? {
+        return networkLayer.apiClient!!.getAllLocations(page).body()
     }
 
-    suspend fun getAllEpisode(page: Int): AllEpisodes {
-        return networkLayer.apiClient!!.getAllEpisodes(page).body()!!
+    suspend fun getAllEpisode(page: Int): AllEpisodes? {
+        return networkLayer.apiClient!!.getAllEpisodes(page).body()
     }
 }
