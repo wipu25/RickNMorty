@@ -11,10 +11,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/epoxy_characters"
+        android:background="@drawable/border_purple_200"
+        android:visibility="gone"
+        android:layout_margin="8dp"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/filter_header"
+            android:paddingBottom="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="Filter Search"
@@ -37,12 +42,15 @@
             />
 
         <EditText
+            android:id="@+id/edit_filter_name"
             android:layout_width="0dp"
             android:padding="4dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/border_purple_200"
             app:layout_constraintLeft_toRightOf="@id/name_head"
             app:layout_constraintTop_toBottomOf="@id/filter_header"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/status_head"
             />
 
         <TextView
@@ -57,12 +65,14 @@
             />
 
         <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/status_chip"
             android:layout_width="0dp"
-            android:padding="8dp"
+            android:padding="4dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/name_head"
             app:layout_constraintLeft_toRightOf="@id/status_head"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/species_head"
             />
 
         <TextView
@@ -71,19 +81,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Species"
-            app:layout_constraintTop_toBottomOf="@id/status_head"
+            app:layout_constraintTop_toBottomOf="@id/status_chip"
             app:layout_constraintBottom_toTopOf="@id/type_head"
             app:layout_constraintLeft_toLeftOf="parent"
             />
 
         <EditText
+            android:id="@+id/edit_filter_species"
             android:layout_width="0dp"
-            android:padding="4dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/border_purple_200"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/edit_filter_type"
             app:layout_constraintLeft_toRightOf="@id/species_head"
-            app:layout_constraintTop_toBottomOf="@id/status_head"
             app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/status_chip" />
 
         <TextView
             android:id="@+id/type_head"
@@ -97,13 +109,15 @@
             />
 
         <EditText
+            android:id="@+id/edit_filter_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/border_purple_200"
             android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/gender_chip"
             app:layout_constraintLeft_toRightOf="@id/type_head"
-            app:layout_constraintTop_toBottomOf="@id/species_head"
             app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/species_head" />
 
         <TextView
             android:id="@+id/gender_head"
@@ -117,8 +131,9 @@
             />
 
         <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/gender_chip"
             android:layout_width="0dp"
-            android:padding="8dp"
+            android:padding="4dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/type_head"
             app:layout_constraintLeft_toRightOf="@id/gender_head"

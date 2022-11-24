@@ -6,6 +6,7 @@ import com.example.ricknmorty.R
 import com.example.ricknmorty.arch.GetEpisodeInterface
 import com.example.ricknmorty.databinding.ModelChipsBinding
 import com.example.ricknmorty.databinding.ModelEpisodeSeasonHeaderBinding
+import com.example.ricknmorty.models.epoxy.ChipEpoxyModel
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 import com.example.ricknmorty.models.response.Episode
@@ -37,15 +38,9 @@ class EpisodeListEpoxyController(private val episodeListInterface: GetEpisodeInt
 
     override fun buildItemModel(currentPosition: Int, item: Episode?): EpoxyModel<*> {
         item?.let {
-            return EpisodeChipEpoxyModel("EP${episodeListInterface.getEpisode(it.id.toInt())} ${item.name}").id(it.id)
+            return ChipEpoxyModel("EP${episodeListInterface.getEpisode(it.id.toInt())} ${item.name}").id(it.id)
         } ?: run {
             return LoadingEpoxyModel().id("loading")
-        }
-    }
-
-    data class EpisodeChipEpoxyModel(private val name: String): ViewBindingKotlinModel<ModelChipsBinding>(R.layout.model_chips) {
-        override fun ModelChipsBinding.bind() {
-            episodeTitle.text = name
         }
     }
 
