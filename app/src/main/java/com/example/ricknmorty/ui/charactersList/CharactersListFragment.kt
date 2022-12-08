@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.FilterType
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
@@ -54,7 +55,27 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.editFilterType.addTextChangedListener{
-            Log.d("Filter",it.toString())
+            characterEpoxyController.submitList(null)
+            sharedViewModel.saveFilterCharacterInfo(FilterType.TYPE,it.toString())
+            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
+                    characaterList -> characterEpoxyController.submitList(characaterList)
+            }
+        }
+
+        binding.editFilterName.addTextChangedListener {
+            characterEpoxyController.submitList(null)
+            sharedViewModel.saveFilterCharacterInfo(FilterType.NAME,it.toString())
+            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
+                    characaterList -> characterEpoxyController.submitList(characaterList)
+            }
+        }
+
+        binding.editFilterSpecies.addTextChangedListener {
+            characterEpoxyController.submitList(null)
+            sharedViewModel.saveFilterCharacterInfo(FilterType.SPECIES,it.toString())
+            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
+                    characaterList -> characterEpoxyController.submitList(characaterList)
+            }
         }
     }
 

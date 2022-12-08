@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/filter_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,141 +12,154 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/epoxy_characters"
-        android:background="@drawable/border_purple_200"
-        android:visibility="gone"
-        android:layout_margin="8dp"
-        android:padding="16dp">
+        app:cardElevation="5dp"
+        app:cardCornerRadius="16dp"
+        android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/filter_header"
-            android:paddingBottom="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="Filter Search"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/name_head"
-            />
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/name_head"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            app:layout_constraintTop_toBottomOf="@id/filter_header"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            <TextView
+                android:id="@+id/filter_header"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:text="Filter Search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/name_head"
+                />
 
-        <EditText
-            android:id="@+id/edit_filter_name"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_purple_200"
-            app:layout_constraintLeft_toRightOf="@id/name_head"
-            app:layout_constraintTop_toBottomOf="@id/filter_header"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/status_head"
-            />
+            <TextView
+                android:id="@+id/name_head"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                app:layout_constraintTop_toBottomOf="@id/filter_header"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
 
-        <TextView
-            android:id="@+id/status_head"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            app:layout_constraintTop_toBottomOf="@id/name_head"
-            app:layout_constraintBottom_toTopOf="@id/species_head"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            <EditText
+                android:id="@+id/edit_filter_name"
+                android:layout_width="0dp"
+                android:layout_marginHorizontal="4dp"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_purple_200"
+                app:layout_constraintLeft_toRightOf="@id/name_head"
+                app:layout_constraintTop_toBottomOf="@id/filter_header"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/status_head"
+                android:elevation="@dimen/cardview_default_elevation"
+                />
 
-        <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/status_chip"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/name_head"
-            app:layout_constraintLeft_toRightOf="@id/status_head"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/species_head"
-            />
+            <TextView
+                android:id="@+id/status_head"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                app:layout_constraintTop_toBottomOf="@id/name_head"
+                app:layout_constraintBottom_toTopOf="@id/species_head"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
 
-        <TextView
-            android:id="@+id/species_head"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Species"
-            app:layout_constraintTop_toBottomOf="@id/status_chip"
-            app:layout_constraintBottom_toTopOf="@id/type_head"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/status_chip"
+                android:layout_width="0dp"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/name_head"
+                app:layout_constraintLeft_toRightOf="@id/status_head"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/species_head"
+                />
 
-        <EditText
-            android:id="@+id/edit_filter_species"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_purple_200"
-            android:padding="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/edit_filter_type"
-            app:layout_constraintLeft_toRightOf="@id/species_head"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status_chip" />
+            <TextView
+                android:id="@+id/species_head"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Species"
+                app:layout_constraintTop_toBottomOf="@id/status_chip"
+                app:layout_constraintBottom_toTopOf="@id/type_head"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
 
-        <TextView
-            android:id="@+id/type_head"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type"
-            app:layout_constraintTop_toBottomOf="@id/species_head"
-            app:layout_constraintBottom_toTopOf="@id/gender_head"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            <EditText
+                android:id="@+id/edit_filter_species"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_purple_200"
+                android:layout_marginHorizontal="4dp"
+                android:padding="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/edit_filter_type"
+                app:layout_constraintLeft_toRightOf="@id/species_head"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/status_chip"
+                android:elevation="@dimen/cardview_default_elevation" />
 
-        <EditText
-            android:id="@+id/edit_filter_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_purple_200"
-            android:padding="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/gender_chip"
-            app:layout_constraintLeft_toRightOf="@id/type_head"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/species_head" />
+            <TextView
+                android:id="@+id/type_head"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                app:layout_constraintTop_toBottomOf="@id/species_head"
+                app:layout_constraintBottom_toTopOf="@id/gender_head"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
 
-        <TextView
-            android:id="@+id/gender_head"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gender"
-            app:layout_constraintTop_toBottomOf="@id/type_head"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <EditText
+                android:id="@+id/edit_filter_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_purple_200"
+                android:padding="4dp"
+                android:layout_marginHorizontal="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/gender_chip"
+                app:layout_constraintLeft_toRightOf="@id/type_head"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/species_head"
+                android:elevation="@dimen/cardview_default_elevation" />
 
-        <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/gender_chip"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/type_head"
-            app:layout_constraintLeft_toRightOf="@id/gender_head"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <TextView
+                android:id="@+id/gender_head"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                app:layout_constraintTop_toBottomOf="@id/type_head"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/gender_chip"
+                android:layout_width="0dp"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/type_head"
+                app:layout_constraintLeft_toRightOf="@id/gender_head"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/epoxy_characters"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

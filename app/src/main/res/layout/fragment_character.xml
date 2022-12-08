@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
+        android:background="@android:color/transparent"
         android:id="@+id/epoxy_characters_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"

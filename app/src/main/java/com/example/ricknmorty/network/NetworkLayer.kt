@@ -23,8 +23,13 @@ object NetworkLayer {
 }
 
 interface APIInterface {
-    @GET("character/2")
-    suspend fun getCharacter() : Response<CharacterInfo>
+    @GET("character")
+    suspend fun getFilterCharacter(@Query("page") page: Int,
+                                   @Query("name") name: String,
+                                   @Query("status") status: String,
+                                   @Query("species") species: String,
+                                   @Query("type") type: String,
+                                   @Query("gender") gender: String) : Response<AllCharacters>
 
     @GET("character")
     suspend fun getCharacterByPage(@Query("page") page: Int) : Response<AllCharacters>

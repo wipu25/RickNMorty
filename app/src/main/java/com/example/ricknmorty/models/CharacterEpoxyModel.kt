@@ -13,7 +13,6 @@ data class CharacterEpoxyModel(val characterInfo: CharacterInfo,val charactersLi
             charactersListInterface.onSelected(characterInfo)
         }
         textName.text = characterInfo.name
-        textStatus.text = characterInfo.status
         Picasso.get().load(characterInfo.image).into(profileImage)
         when(characterInfo.gender) {
             "Female" -> genderImage.setImageResource(R.drawable.female_icon)

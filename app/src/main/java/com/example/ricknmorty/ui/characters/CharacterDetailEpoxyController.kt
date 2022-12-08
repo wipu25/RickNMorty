@@ -22,8 +22,8 @@ class CharacterDetailEpoxyController(private val characterEpisodeInterface: GetE
 
     override fun buildModels() {
         if(characterInfo != null) {
-            HeaderDetailEpoxyModel(characterInfo!!.name).id("name_${characterInfo!!.id}").addTo(this)
             ProfileImageEpoxyModel(characterInfo!!.image).id("image_${characterInfo!!.id}").addTo(this)
+            HeaderDetailEpoxyModel(characterInfo!!.name).id("name_${characterInfo!!.id}").addTo(this)
             ProfileDetailEpoxyModel(characterInfo!!.gender,"Gender").id("gender_${characterInfo!!.id}").addTo(this)
             ProfileDetailEpoxyModel(characterInfo!!.species,"Species").id("species_${characterInfo!!.id}").addTo(this)
             ProfileDetailEpoxyModel(characterInfo!!.created,"Created").id("created_${characterInfo!!.id}").addTo(this)
