@@ -2,7 +2,7 @@ package com.example.ricknmorty.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class PageInfo (
+data class PageInfo(
     @SerializedName("count")
     val count: Int,
     @SerializedName("pages")

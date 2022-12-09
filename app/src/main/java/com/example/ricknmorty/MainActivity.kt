@@ -1,8 +1,6 @@
 package com.example.ricknmorty
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -23,21 +21,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.characterFragment,
-            R.id.locationFragment,
-            R.id.episodeFragment
-        ))
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.characterFragment,
+                R.id.locationFragment,
+                R.id.episodeFragment
+            )
+        )
 
-        setupActionBarWithNavController(navController,appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_nav)
         setupWithNavController(bottomNavigation, navController)
 
-        navController.addOnDestinationChangedListener{ controller, destination, argument ->
-            if (appBarConfiguration.topLevelDestinations.contains(destination.id)){
+        navController.addOnDestinationChangedListener { controller, destination, argument ->
+            if (appBarConfiguration.topLevelDestinations.contains(destination.id)) {
                 bottomNavigation.isVisible = true
             } else {
                 bottomNavigation.isGone = true

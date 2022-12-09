@@ -1,4 +1,4 @@
-package com.example.ricknmorty.ui.locations
+package com.example.ricknmorty.ui.locations.dataSource
 
 import androidx.paging.DataSource
 import com.example.ricknmorty.models.response.Location
@@ -10,6 +10,6 @@ class LocationListDataSourceFactory(
     private val repository: CharacterRepository
 ) : DataSource.Factory<Int, Location>() {
     override fun create(): DataSource<Int, Location> {
-        return LocationListDataSource(coroutineScope,repository)
+        return LocationListDataSource(coroutineScope, repository)
     }
 }

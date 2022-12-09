@@ -2,15 +2,16 @@ package com.example.ricknmorty.ui.characters
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.ricknmorty.R
-import com.example.ricknmorty.arch.GetEpisodeInterface
+import com.example.ricknmorty.arch.EpisodeListInterface
 import com.example.ricknmorty.databinding.ModelEpisodeSeasonHeaderBinding
 import com.example.ricknmorty.models.epoxy.ChipEpoxyModel
 import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 
-class CharacterEpisodeController(private val characterEpisodeInterface: GetEpisodeInterface) : EpoxyController() {
+class CharacterEpisodeController(private val characterEpisodeInterface: EpisodeListInterface) :
+    EpoxyController() {
 
     private var seasonHeaderDisplay: Int = 0
-    var characterEpisode : List<String> ? = null
+    var characterEpisode: List<String>? = null
         set(value) {
             field = value
             requestModelBuild()
@@ -21,10 +22,11 @@ class CharacterEpisodeController(private val characterEpisodeInterface: GetEpiso
             val splitEpisode = episode.split("/").last().toInt()
             val episodeNum = characterEpisodeInterface.getEpisode(splitEpisode)
             val seasonNum = isShownNewSeason(splitEpisode)
-            if(seasonNum != null){
+            if (seasonNum != null) {
                 SeasonHeaderEpoxyModel("Season $seasonNum").id("header_$seasonNum").addTo(this)
             }
-            ChipEpoxyModel("EP.$episodeNum").id("episode_${characterEpisode!!.indexOf(episode)}").addTo(this)
+            ChipEpoxyModel("EP.$episodeNum").id("episode_${characterEpisode!!.indexOf(episode)}")
+                .addTo(this)
         }
     }
 
@@ -54,10 +56,12 @@ class CharacterEpisodeController(private val characterEpisodeInterface: GetEpiso
         return null
     }
 
-    data class SeasonHeaderEpoxyModel(private val season: String): ViewBindingKotlinModel<ModelEpisodeSeasonHeaderBinding>(R.layout.model_episode_season_header){
+    data class SeasonHeaderEpoxyModel(private val season: String) :
+        ViewBindingKotlinModel<ModelEpisodeSeasonHeaderBinding>(R.layout.model_episode_season_header) {
         override fun ModelEpisodeSeasonHeaderBinding.bind() {
             seasonText.text = season
         }
+
         override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
             return totalSpanCount
         }

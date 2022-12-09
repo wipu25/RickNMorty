@@ -1,4 +1,4 @@
-package com.example.ricknmorty.ui.charactersList
+package com.example.ricknmorty.ui.charactersList.dataSource
 
 import androidx.paging.DataSource
 import com.example.ricknmorty.models.FilterCharacter
@@ -10,7 +10,7 @@ class CharacterDataSourceFactory(
     private val coroutineScope: CoroutineScope,
     private val repository: CharacterRepository,
     private val filterCharacter: FilterCharacter? = null
-): DataSource.Factory<Int, CharacterInfo>() {
+) : DataSource.Factory<Int, CharacterInfo>() {
     override fun create(): DataSource<Int, CharacterInfo> {
         return CharactersDataSource(coroutineScope, repository, filterCharacter)
     }

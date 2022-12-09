@@ -1,10 +1,11 @@
-package com.example.ricknmorty.ui.charactersList
+package com.example.ricknmorty.ui.charactersList.filter
 
 import com.airbnb.epoxy.EpoxyController
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.models.epoxy.ChipFilterEpoxyModel
 
-class GenderFilterEpoxyController(private val onItemSelected: (String) -> Unit): EpoxyController() {
+class GenderFilterEpoxyController(private val onItemSelected: (String) -> Unit) :
+    EpoxyController() {
     var genderFilter: List<RickNMortyViewModel.ChipViewState> = emptyList()
         set(value) {
             field = value

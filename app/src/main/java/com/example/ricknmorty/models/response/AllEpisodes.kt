@@ -2,11 +2,11 @@ package com.example.ricknmorty.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class AllEpisodes (
+data class AllEpisodes(
     @SerializedName("info")
     val info: PageInfo,
     @SerializedName("results")
-    val results : List<Episode>
+    val results: List<Episode>
 )
 
 data class Episode(
@@ -19,9 +19,9 @@ data class Episode(
     @SerializedName("episode")
     val episode: String,
     @SerializedName("characters")
-    val charactersListUrl : List<String>,
+    val charactersListUrl: List<String>,
     @SerializedName("url")
-    val url : String,
+    val url: String,
     @SerializedName("created")
     val created: String
 )

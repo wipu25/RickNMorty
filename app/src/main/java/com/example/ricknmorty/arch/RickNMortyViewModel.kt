@@ -11,14 +11,11 @@ import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.models.response.Episode
 import com.example.ricknmorty.models.response.Location
 import com.example.ricknmorty.network.CharacterRepository
-import com.example.ricknmorty.ui.charactersList.CharacterDataSourceFactory
-import com.example.ricknmorty.ui.episodes.EpisodeListDataSourceFactory
-import com.example.ricknmorty.ui.locations.LocationListDataSource
-import com.example.ricknmorty.ui.locations.LocationListDataSourceFactory
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import com.example.ricknmorty.ui.charactersList.dataSource.CharacterDataSourceFactory
+import com.example.ricknmorty.ui.episodes.dataSource.EpisodeListDataSourceFactory
+import com.example.ricknmorty.ui.locations.dataSource.LocationListDataSourceFactory
 
-class RickNMortyViewModel: ViewModel() {
+class RickNMortyViewModel : ViewModel() {
     private var repository: CharacterRepository = CharacterRepository()
     private val pageListConfig: PagedList.Config = PagedList.Config.Builder()
         .setPageSize(20)
@@ -28,11 +25,13 @@ class RickNMortyViewModel: ViewModel() {
     var characterListLiveData: LiveData<PagedList<CharacterInfo>> =
         LivePagedListBuilder(characterDataSourceFactory, pageListConfig).build()
 
-    private val episodeListDataSourceFactory = EpisodeListDataSourceFactory(viewModelScope, repository)
+    private val episodeListDataSourceFactory =
+        EpisodeListDataSourceFactory(viewModelScope, repository)
     val episodeListLiveData: LiveData<PagedList<Episode>> =
         LivePagedListBuilder(episodeListDataSourceFactory, pageListConfig).build()
 
-    private val locationListDataSourceFactory = LocationListDataSourceFactory(viewModelScope, repository)
+    private val locationListDataSourceFactory =
+        LocationListDataSourceFactory(viewModelScope, repository)
     val locationListLiveData: LiveData<PagedList<Location>> =
         LivePagedListBuilder(locationListDataSourceFactory, pageListConfig).build()
 
@@ -48,9 +47,9 @@ class RickNMortyViewModel: ViewModel() {
 
     fun initialChip() {
         val statusList = ArrayList<ChipViewState>()
-        val initialStatusList = listOf<String>("alive","dead","unknown")
+        val initialStatusList = listOf<String>("alive", "dead", "unknown")
         val genderList = ArrayList<ChipViewState>()
-        val initialGenderList = listOf<String>("male","female","genderless","unknown")
+        val initialGenderList = listOf<String>("male", "female", "genderless", "unknown")
 
         initialStatusList.forEach {
             statusList.add(
@@ -85,8 +84,8 @@ class RickNMortyViewModel: ViewModel() {
         }
     }
 
-    fun saveFilterCharacterInfo(filterType: FilterType,value: String){
-        when(filterType) {
+    fun saveFilterCharacterInfo(filterType: FilterType, value: String) {
+        when (filterType) {
             FilterType.NAME -> _filterCharacter.name = value
             FilterType.SPECIES -> _filterCharacter.species = value
             FilterType.TYPE -> _filterCharacter.type = value
@@ -97,9 +96,10 @@ class RickNMortyViewModel: ViewModel() {
         characterListLiveData = LivePagedListBuilder(filterChar, pageListConfig).build()
     }
 
-    fun onChipFilterSelected(filterType: FilterType,status: String) {
+    fun onChipFilterSelected(filterType: FilterType, status: String) {
         val chipList = ArrayList<ChipViewState>()
-        val viewStateLiveData = if(filterType == FilterType.STATUS) _statusViewStateLiveData else _genderViewStateLiveData
+        val viewStateLiveData =
+            if (filterType == FilterType.STATUS) _statusViewStateLiveData else _genderViewStateLiveData
         viewStateLiveData.value!!.forEach {
             chipList.add(
                 ChipViewState(
@@ -108,16 +108,16 @@ class RickNMortyViewModel: ViewModel() {
                 )
             )
         }
-        saveFilterCharacterInfo(filterType,status)
+        saveFilterCharacterInfo(filterType, status)
         viewStateLiveData.postValue(chipList)
     }
 
-    data class ChipViewState (
+    data class ChipViewState(
         val value: String,
         val isSelected: Boolean = false
     )
 }
 
 enum class FilterType {
-    NAME,STATUS,TYPE,GENDER,SPECIES
+    NAME, STATUS, TYPE, GENDER, SPECIES
 }

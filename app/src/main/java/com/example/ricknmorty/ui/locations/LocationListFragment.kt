@@ -8,28 +8,28 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.LocationListInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentLocationsBinding
 
-class LocationListFragment : Fragment(), MenuProvider {
-    private var _binding : FragmentLocationsBinding? = null
+class LocationListFragment : Fragment(), MenuProvider, LocationListInterface {
+    private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: RickNMortyViewModel by activityViewModels()
-
+    private val locationListEpoxyController = LocationListEpoxyController(this)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLocationsBinding.inflate(inflater,container,false)
+        _binding = FragmentLocationsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val locationListEpoxyController = LocationListEpoxyController()
         binding.locationEpoxy.setController(locationListEpoxyController)
-        sharedViewModel.locationListLiveData.observe(viewLifecycleOwner){
-            locationList -> locationListEpoxyController.submitList(locationList)
+        sharedViewModel.locationListLiveData.observe(viewLifecycleOwner) { locationList ->
+            locationListEpoxyController.submitList(locationList)
         }
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -47,15 +47,15 @@ class LocationListFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_filter-> {
-                if(binding.filterLocation.visibility == View.GONE){
-                    binding.filterLocation.visibility = View.VISIBLE
-                } else {
-                    binding.filterLocation.visibility = View.GONE
-                }
+            R.id.action_filter -> {
+                locationListEpoxyController.updateFilterVisibility()
+                locationListEpoxyController.requestModelBuild()
+                if (locationListEpoxyController.isFilterVisible)
+                    binding.locationEpoxy.scrollToPosition(0)
                 true
             }
             else -> false
         }
+        return false
     }
 }

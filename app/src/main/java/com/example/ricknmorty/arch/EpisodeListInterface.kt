@@ -1,5 +1,5 @@
 package com.example.ricknmorty.arch
 
-interface GetEpisodeInterface {
+interface EpisodeListInterface {
     fun getEpisode(episodeNum: Int): Int?
 }

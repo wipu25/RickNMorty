@@ -4,12 +4,15 @@ import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.CharactersListInterface
 import com.example.ricknmorty.arch.FilterType
 import com.example.ricknmorty.databinding.ModelCharacterFilterBinding
 import com.example.ricknmorty.databinding.ModelCharacterItemBinding
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
 import com.example.ricknmorty.models.epoxy.ViewBindingKotlinModel
 import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.filter.GenderFilterEpoxyController
+import com.example.ricknmorty.ui.charactersList.filter.StatusFilterEpoxyController
 import com.squareup.picasso.Picasso
 
 class CharacterEpoxyController(

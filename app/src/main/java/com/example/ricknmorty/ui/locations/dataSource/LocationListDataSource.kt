@@ -1,4 +1,4 @@
-package com.example.ricknmorty.ui.locations
+package com.example.ricknmorty.ui.locations.dataSource
 
 import androidx.paging.PageKeyedDataSource
 import com.example.ricknmorty.models.response.Location
@@ -16,7 +16,11 @@ class LocationListDataSource(
     ) {
         coroutineScope.launch {
             val locationList = repository.getAllLocation(1)
-            callback.onResult(locationList?.results ?: emptyList(),null, getPageIndexFromNext(locationList?.info?.next))
+            callback.onResult(
+                locationList?.results ?: emptyList(),
+                null,
+                getPageIndexFromNext(locationList?.info?.next)
+            )
         }
     }
 
@@ -26,9 +30,10 @@ class LocationListDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Location>) {
         coroutineScope.launch {
             val location = repository.getAllLocation(params.key)
-            callback.onResult(location?.results ?: emptyList(),params.key + 1)
+            callback.onResult(location?.results ?: emptyList(), params.key + 1)
         }
     }
+
     private fun getPageIndexFromNext(next: String?): Int? {
         return next?.split("?page=")?.get(1)?.toInt()
     }

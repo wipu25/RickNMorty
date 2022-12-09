@@ -2,39 +2,42 @@ package com.example.ricknmorty.ui.charactersList
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.CharactersListInterface
 import com.example.ricknmorty.arch.FilterType
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
+import com.example.ricknmorty.ui.charactersList.filter.GenderFilterEpoxyController
+import com.example.ricknmorty.ui.charactersList.filter.StatusFilterEpoxyController
 
 
-class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider {
+class CharactersListFragment : Fragment(), CharactersListInterface, MenuProvider {
 
     //use binding for ease of getting widget
-    private var _binding : FragmentCharactersListBinding? = null
-    private val  binding get() = _binding!!
+    private var _binding: FragmentCharactersListBinding? = null
+    private val binding get() = _binding!!
     private val sharedViewModel: RickNMortyViewModel by activityViewModels()
-    private val genderFilterEpoxyController = GenderFilterEpoxyController{ it -> updateChipFilter(FilterType.GENDER,it)  }
-    private val statusFilterEpoxyController = StatusFilterEpoxyController{ it -> updateChipFilter(FilterType.STATUS,it)  }
-    private val characterEpoxyController = CharacterEpoxyController(this,genderFilterEpoxyController,statusFilterEpoxyController)
+    private val genderFilterEpoxyController =
+        GenderFilterEpoxyController { it -> updateChipFilter(FilterType.GENDER, it) }
+    private val statusFilterEpoxyController =
+        StatusFilterEpoxyController { it -> updateChipFilter(FilterType.STATUS, it) }
+    private val characterEpoxyController =
+        CharacterEpoxyController(this, genderFilterEpoxyController, statusFilterEpoxyController)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCharactersListBinding.inflate(inflater,container,false)
+        _binding = FragmentCharactersListBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -48,11 +51,11 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         sharedViewModel.initialChip()
-        sharedViewModel.statusViewStateLiveData.observe(viewLifecycleOwner) {
-            statusItem -> statusFilterEpoxyController.statusFilter = statusItem
+        sharedViewModel.statusViewStateLiveData.observe(viewLifecycleOwner) { statusItem ->
+            statusFilterEpoxyController.statusFilter = statusItem
         }
-        sharedViewModel.genderViewStateLiveData.observe(viewLifecycleOwner) {
-                genderItem -> genderFilterEpoxyController.genderFilter = genderItem
+        sharedViewModel.genderViewStateLiveData.observe(viewLifecycleOwner) { genderItem ->
+            genderFilterEpoxyController.genderFilter = genderItem
         }
 
     }
@@ -77,10 +80,10 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_filter-> {
+            R.id.action_filter -> {
                 characterEpoxyController.updateFilterVisibility()
                 characterEpoxyController.requestModelBuild()
-                if(characterEpoxyController.isFilterVisible)
+                if (characterEpoxyController.isFilterVisible)
                     binding.epoxyCharacters.scrollToPosition(0)
                 true
             }
@@ -91,20 +94,20 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
 
     override fun updateInputFilter(filterType: FilterType, value: Editable?) {
         characterEpoxyController.submitList(null)
-        sharedViewModel.saveFilterCharacterInfo(filterType,value.toString())
+        sharedViewModel.saveFilterCharacterInfo(filterType, value.toString())
         bindCharacterLiveData()
     }
 
-    private fun updateChipFilter(filterType: FilterType,value: String) {
+    private fun updateChipFilter(filterType: FilterType, value: String) {
         characterEpoxyController.submitList(null)
-        sharedViewModel.onChipFilterSelected(filterType,value)
+        sharedViewModel.onChipFilterSelected(filterType, value)
         bindCharacterLiveData()
     }
 
 
     private fun bindCharacterLiveData() {
-        sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
-                characterList -> characterEpoxyController.submitList(characterList)
+        sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) { characterList ->
+            characterEpoxyController.submitList(characterList)
         }
     }
 }

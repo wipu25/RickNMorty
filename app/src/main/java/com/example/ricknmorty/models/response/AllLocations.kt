@@ -2,7 +2,7 @@ package com.example.ricknmorty.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class AllLocations (
+data class AllLocations(
     @SerializedName("info")
     val info: PageInfo,
     @SerializedName("results")

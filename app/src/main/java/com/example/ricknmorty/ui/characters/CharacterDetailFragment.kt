@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.ricknmorty.R
-import com.example.ricknmorty.arch.GetEpisodeInterface
+import com.example.ricknmorty.arch.EpisodeListInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharacterBinding
 
-class CharacterDetailFragment : Fragment(), GetEpisodeInterface {
+class CharacterDetailFragment : Fragment(), EpisodeListInterface {
 
     private var _binding: FragmentCharacterBinding? = null
     private val args: CharacterDetailFragmentArgs by navArgs()
@@ -26,7 +24,7 @@ class CharacterDetailFragment : Fragment(), GetEpisodeInterface {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCharacterBinding.inflate(inflater,container,false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
