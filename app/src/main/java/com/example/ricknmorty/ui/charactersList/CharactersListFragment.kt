@@ -25,6 +25,9 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
     private var _binding : FragmentCharactersListBinding? = null
     private val  binding get() = _binding!!
     private val sharedViewModel: RickNMortyViewModel by activityViewModels()
+    private val genderFilterEpoxyController = GenderFilterEpoxyController{ it -> updateChipFilter(FilterType.GENDER,it)  }
+    private val statusFilterEpoxyController = StatusFilterEpoxyController{ it -> updateChipFilter(FilterType.STATUS,it)  }
+    private val characterEpoxyController = CharacterEpoxyController(this,genderFilterEpoxyController,statusFilterEpoxyController)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,45 +41,20 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterEpoxyController = CharacterEpoxyController(this)
-        val genderFilterEpoxyController = GenderFilterEpoxyController()
-        val statusFilterEpoxyController = StatusFilterEpoxyController()
-        binding.statusChip.setController(statusFilterEpoxyController)
-        binding.genderChip.setController(genderFilterEpoxyController)
-        statusFilterEpoxyController.requestModelBuild()
-        genderFilterEpoxyController.requestModelBuild()
-
         binding.epoxyCharacters.setController(characterEpoxyController)
-        sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
-                characterList -> characterEpoxyController.submitList(characterList)
-        }
+        bindCharacterLiveData()
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        binding.editFilterType.addTextChangedListener{
-            characterEpoxyController.submitList(null)
-            sharedViewModel.saveFilterCharacterInfo(FilterType.TYPE,it.toString())
-            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
-                    characaterList -> characterEpoxyController.submitList(characaterList)
-            }
+        sharedViewModel.initialChip()
+        sharedViewModel.statusViewStateLiveData.observe(viewLifecycleOwner) {
+            statusItem -> statusFilterEpoxyController.statusFilter = statusItem
+        }
+        sharedViewModel.genderViewStateLiveData.observe(viewLifecycleOwner) {
+                genderItem -> genderFilterEpoxyController.genderFilter = genderItem
         }
 
-        binding.editFilterName.addTextChangedListener {
-            characterEpoxyController.submitList(null)
-            sharedViewModel.saveFilterCharacterInfo(FilterType.NAME,it.toString())
-            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
-                    characaterList -> characterEpoxyController.submitList(characaterList)
-            }
-        }
-
-        binding.editFilterSpecies.addTextChangedListener {
-            characterEpoxyController.submitList(null)
-            sharedViewModel.saveFilterCharacterInfo(FilterType.SPECIES,it.toString())
-            sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
-                    characaterList -> characterEpoxyController.submitList(characaterList)
-            }
-        }
     }
 
     override fun onDestroy() {
@@ -100,14 +78,33 @@ class CharactersListFragment: Fragment(), CharactersListInterface, MenuProvider 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_filter-> {
-                if(binding.filterSearch.visibility == View.GONE){
-                    binding.filterSearch.visibility = View.VISIBLE
-                } else {
-                    binding.filterSearch.visibility = View.GONE
-                }
+                characterEpoxyController.updateFilterVisibility()
+                characterEpoxyController.requestModelBuild()
+                if(characterEpoxyController.isFilterVisible)
+                    binding.epoxyCharacters.scrollToPosition(0)
                 true
             }
             else -> false
+        }
+        return false
+    }
+
+    override fun updateInputFilter(filterType: FilterType, value: Editable?) {
+        characterEpoxyController.submitList(null)
+        sharedViewModel.saveFilterCharacterInfo(filterType,value.toString())
+        bindCharacterLiveData()
+    }
+
+    private fun updateChipFilter(filterType: FilterType,value: String) {
+        characterEpoxyController.submitList(null)
+        sharedViewModel.onChipFilterSelected(filterType,value)
+        bindCharacterLiveData()
+    }
+
+
+    private fun bindCharacterLiveData() {
+        sharedViewModel.characterListLiveData.observe(viewLifecycleOwner) {
+                characterList -> characterEpoxyController.submitList(characterList)
         }
     }
 }
