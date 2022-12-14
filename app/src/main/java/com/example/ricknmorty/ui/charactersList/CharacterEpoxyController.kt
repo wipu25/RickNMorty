@@ -4,8 +4,8 @@ import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.CharacterFilterType
 import com.example.ricknmorty.arch.CharactersListInterface
-import com.example.ricknmorty.arch.FilterType
 import com.example.ricknmorty.databinding.ModelCharacterFilterBinding
 import com.example.ricknmorty.databinding.ModelCharacterItemBinding
 import com.example.ricknmorty.models.epoxy.LoadingEpoxyModel
@@ -83,13 +83,13 @@ class CharacterEpoxyController(
     ) : ViewBindingKotlinModel<ModelCharacterFilterBinding>(R.layout.model_character_filter) {
         override fun ModelCharacterFilterBinding.bind() {
             editFilterName.addTextChangedListener {
-                charactersListInterface.updateInputFilter(FilterType.NAME, it)
+                charactersListInterface.updateInputFilter(CharacterFilterType.NAME, it.toString())
             }
             editFilterSpecies.addTextChangedListener {
-                charactersListInterface.updateInputFilter(FilterType.SPECIES, it)
+                charactersListInterface.updateInputFilter(CharacterFilterType.SPECIES, it.toString())
             }
             editFilterType.addTextChangedListener {
-                charactersListInterface.updateInputFilter(FilterType.TYPE, it)
+                charactersListInterface.updateInputFilter(CharacterFilterType.TYPE, it.toString())
             }
 
             statusChip.setController(statusFilterEpoxyController)

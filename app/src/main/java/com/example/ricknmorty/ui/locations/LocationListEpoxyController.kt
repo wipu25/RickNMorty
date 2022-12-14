@@ -5,6 +5,7 @@ import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.LocationFilterType
 import com.example.ricknmorty.arch.LocationListInterface
 import com.example.ricknmorty.databinding.ModelLocationFilterBinding
 import com.example.ricknmorty.databinding.ModelLocationItemBinding
@@ -52,13 +53,13 @@ class LocationListEpoxyController(private val locationListInterface: LocationLis
         ViewBindingKotlinModel<ModelLocationFilterBinding>(R.layout.model_location_filter) {
         override fun ModelLocationFilterBinding.bind() {
             editFilterDimension.addTextChangedListener {
-
+                locationListInterface.updateInputFilter(LocationFilterType.DIMENSION,it.toString())
             }
             editFilterName.addTextChangedListener {
-
+                locationListInterface.updateInputFilter(LocationFilterType.NAME,it.toString())
             }
             editFilterType.addTextChangedListener {
-
+                locationListInterface.updateInputFilter(LocationFilterType.TYPE,it.toString())
             }
         }
     }

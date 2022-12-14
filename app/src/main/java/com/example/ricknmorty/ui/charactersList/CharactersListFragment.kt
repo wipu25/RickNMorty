@@ -2,6 +2,7 @@ package com.example.ricknmorty.ui.charactersList
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -9,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.CharacterFilterType
 import com.example.ricknmorty.arch.CharactersListInterface
-import com.example.ricknmorty.arch.FilterType
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharactersListBinding
 import com.example.ricknmorty.models.response.CharacterInfo
@@ -26,11 +28,12 @@ class CharactersListFragment : Fragment(), CharactersListInterface, MenuProvider
     private val binding get() = _binding!!
     private val sharedViewModel: RickNMortyViewModel by activityViewModels()
     private val genderFilterEpoxyController =
-        GenderFilterEpoxyController { it -> updateChipFilter(FilterType.GENDER, it) }
+        GenderFilterEpoxyController { it -> updateChipFilter(CharacterFilterType.GENDER, it) }
     private val statusFilterEpoxyController =
-        StatusFilterEpoxyController { it -> updateChipFilter(FilterType.STATUS, it) }
+        StatusFilterEpoxyController { it -> updateChipFilter(CharacterFilterType.STATUS, it) }
     private val characterEpoxyController =
         CharacterEpoxyController(this, genderFilterEpoxyController, statusFilterEpoxyController)
+    private var scrollPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +59,17 @@ class CharactersListFragment : Fragment(), CharactersListInterface, MenuProvider
         }
         sharedViewModel.genderViewStateLiveData.observe(viewLifecycleOwner) { genderItem ->
             genderFilterEpoxyController.genderFilter = genderItem
+        }
+
+        binding.epoxyCharacters.setOnScrollChangeListener { p0, p1, p2, p3, p4 ->
+            scrollPosition += p4
+            Log.d("scroll", scrollPosition.toString())
+            binding.toTopFab.visibility = if(scrollPosition < -10) View.VISIBLE else View.GONE
+        }
+
+        binding.toTopFab.setOnClickListener {
+            binding.epoxyCharacters.scrollToPosition(0)
+            scrollPosition = 0
         }
 
     }
@@ -92,13 +106,13 @@ class CharactersListFragment : Fragment(), CharactersListInterface, MenuProvider
         return false
     }
 
-    override fun updateInputFilter(filterType: FilterType, value: Editable?) {
+    override fun updateInputFilter(filterType: CharacterFilterType, value: String) {
         characterEpoxyController.submitList(null)
-        sharedViewModel.saveFilterCharacterInfo(filterType, value.toString())
+        sharedViewModel.saveFilterCharacterInfo(filterType, value)
         bindCharacterLiveData()
     }
 
-    private fun updateChipFilter(filterType: FilterType, value: String) {
+    private fun updateChipFilter(filterType: CharacterFilterType, value: String) {
         characterEpoxyController.submitList(null)
         sharedViewModel.onChipFilterSelected(filterType, value)
         bindCharacterLiveData()

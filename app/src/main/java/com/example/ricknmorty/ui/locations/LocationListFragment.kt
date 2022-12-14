@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.EpisodeFilterType
+import com.example.ricknmorty.arch.LocationFilterType
 import com.example.ricknmorty.arch.LocationListInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentLocationsBinding
@@ -57,5 +59,13 @@ class LocationListFragment : Fragment(), MenuProvider, LocationListInterface {
             else -> false
         }
         return false
+    }
+
+    override fun updateInputFilter(filterType: LocationFilterType, value: String) {
+        locationListEpoxyController.submitList(null)
+        sharedViewModel.saveFilterLocation(filterType,value)
+        sharedViewModel.locationListLiveData.observe(viewLifecycleOwner) {
+            locationListEpoxyController.submitList(it)
+        }
     }
 }

@@ -35,8 +35,23 @@ interface APIInterface {
     suspend fun getCharacterByPage(@Query("page") page: Int): Response<AllCharacters>
 
     @GET("location")
+    suspend fun getFilterLocations(
+        @Query("page") page: Int,
+        @Query("name") name: String,
+        @Query("type") type: String,
+        @Query("dimension") dimension: String
+    ): Response<AllLocations>
+
+    @GET("location")
     suspend fun getAllLocations(@Query("page") page: Int): Response<AllLocations>
 
     @GET("episode")
     suspend fun getAllEpisodes(@Query("page") page: Int): Response<AllEpisodes>
+
+    @GET("episode")
+    suspend fun getFilterEpisodes(
+        @Query("page") page: Int,
+        @Query("name") name: String,
+        @Query("episode") episode: String
+    ): Response<AllEpisodes>
 }

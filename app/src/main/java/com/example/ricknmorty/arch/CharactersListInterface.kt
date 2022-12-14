@@ -8,5 +8,5 @@ import com.example.ricknmorty.models.response.CharacterInfo
 interface CharactersListInterface {
     fun onSelected(characterInfo: CharacterInfo)
 
-    fun updateInputFilter(filterType: FilterType, value: Editable?)
+    fun updateInputFilter(filterType: CharacterFilterType, value: String)
 }

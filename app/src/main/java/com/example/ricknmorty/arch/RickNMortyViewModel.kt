@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.ricknmorty.models.FilterCharacter
+import com.example.ricknmorty.models.FilterEpisode
+import com.example.ricknmorty.models.FilterLocation
 import com.example.ricknmorty.models.response.CharacterInfo
 import com.example.ricknmorty.models.response.Episode
 import com.example.ricknmorty.models.response.Location
@@ -27,15 +29,17 @@ class RickNMortyViewModel : ViewModel() {
 
     private val episodeListDataSourceFactory =
         EpisodeListDataSourceFactory(viewModelScope, repository)
-    val episodeListLiveData: LiveData<PagedList<Episode>> =
+    var episodeListLiveData: LiveData<PagedList<Episode>> =
         LivePagedListBuilder(episodeListDataSourceFactory, pageListConfig).build()
 
     private val locationListDataSourceFactory =
         LocationListDataSourceFactory(viewModelScope, repository)
-    val locationListLiveData: LiveData<PagedList<Location>> =
+    var locationListLiveData: LiveData<PagedList<Location>> =
         LivePagedListBuilder(locationListDataSourceFactory, pageListConfig).build()
 
     private var _filterCharacter = FilterCharacter()
+    private var _filterLocation = FilterLocation()
+    private var _filterEpisode = FilterEpisode()
 
     private val _statusViewStateLiveData = MutableLiveData<List<ChipViewState>>()
     val statusViewStateLiveData: LiveData<List<ChipViewState>>
@@ -84,22 +88,41 @@ class RickNMortyViewModel : ViewModel() {
         }
     }
 
-    fun saveFilterCharacterInfo(filterType: FilterType, value: String) {
+    fun saveFilterCharacterInfo(filterType: CharacterFilterType, value: String) {
         when (filterType) {
-            FilterType.NAME -> _filterCharacter.name = value
-            FilterType.SPECIES -> _filterCharacter.species = value
-            FilterType.TYPE -> _filterCharacter.type = value
-            FilterType.STATUS -> _filterCharacter.status = value
-            FilterType.GENDER -> _filterCharacter.gender = value
+            CharacterFilterType.NAME -> _filterCharacter.name = value
+            CharacterFilterType.SPECIES -> _filterCharacter.species = value
+            CharacterFilterType.TYPE -> _filterCharacter.type = value
+            CharacterFilterType.STATUS -> _filterCharacter.status = value
+            CharacterFilterType.GENDER -> _filterCharacter.gender = value
         }
         val filterChar = CharacterDataSourceFactory(viewModelScope, repository, _filterCharacter)
         characterListLiveData = LivePagedListBuilder(filterChar, pageListConfig).build()
     }
 
-    fun onChipFilterSelected(filterType: FilterType, status: String) {
+    fun saveFilterLocation(filterType: LocationFilterType,value: String) {
+        when (filterType) {
+            LocationFilterType.NAME -> _filterLocation.name = value
+            LocationFilterType.TYPE -> _filterLocation.type = value
+            LocationFilterType.DIMENSION -> _filterLocation.dimension = value
+        }
+        val filterLocation = LocationListDataSourceFactory(viewModelScope,repository, _filterLocation)
+        locationListLiveData = LivePagedListBuilder(filterLocation, pageListConfig).build()
+    }
+
+    fun saveFilterEpisode(filterType: EpisodeFilterType,value: String) {
+        when (filterType) {
+            EpisodeFilterType.EPISODE -> _filterEpisode.episode = value
+            EpisodeFilterType.NAME -> _filterEpisode.name = value
+        }
+        val filterEpisode = EpisodeListDataSourceFactory(viewModelScope, repository, _filterEpisode)
+        episodeListLiveData = LivePagedListBuilder(filterEpisode, pageListConfig).build()
+    }
+
+    fun onChipFilterSelected(filterType: CharacterFilterType, status: String) {
         val chipList = ArrayList<ChipViewState>()
         val viewStateLiveData =
-            if (filterType == FilterType.STATUS) _statusViewStateLiveData else _genderViewStateLiveData
+            if (filterType == CharacterFilterType.STATUS) _statusViewStateLiveData else _genderViewStateLiveData
         viewStateLiveData.value!!.forEach {
             chipList.add(
                 ChipViewState(
@@ -118,6 +141,14 @@ class RickNMortyViewModel : ViewModel() {
     )
 }
 
-enum class FilterType {
+enum class CharacterFilterType {
     NAME, STATUS, TYPE, GENDER, SPECIES
 }
+
+enum class EpisodeFilterType {
+    NAME, EPISODE
+}
+enum class LocationFilterType {
+    NAME, TYPE, DIMENSION
+}
+

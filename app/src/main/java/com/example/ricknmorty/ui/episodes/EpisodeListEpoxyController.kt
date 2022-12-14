@@ -4,7 +4,9 @@ import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.EpisodeFilterType
 import com.example.ricknmorty.arch.EpisodeListInterface
+import com.example.ricknmorty.arch.LocationFilterType
 import com.example.ricknmorty.databinding.ModelEpisodeFilterBinding
 import com.example.ricknmorty.databinding.ModelEpisodeSeasonHeaderBinding
 import com.example.ricknmorty.models.epoxy.ChipEpoxyModel
@@ -73,8 +75,10 @@ class EpisodeListEpoxyController(private val episodeListInterface: EpisodeListIn
         ViewBindingKotlinModel<ModelEpisodeFilterBinding>(R.layout.model_episode_filter) {
         override fun ModelEpisodeFilterBinding.bind() {
             editFilterName.addTextChangedListener {
+                episodeListInterface.updateInputFilter(EpisodeFilterType.NAME,it.toString())
             }
             editFilterEpisode.addTextChangedListener {
+                episodeListInterface.updateInputFilter(EpisodeFilterType.EPISODE,it.toString())
             }
         }
 

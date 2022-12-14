@@ -1,6 +1,7 @@
 package com.example.ricknmorty.ui.episodes
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.example.ricknmorty.R
+import com.example.ricknmorty.arch.EpisodeFilterType
 import com.example.ricknmorty.arch.EpisodeListInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentEpisodeBinding
@@ -62,5 +64,13 @@ class EpisodeListFragment : Fragment(), EpisodeListInterface, MenuProvider {
 
     override fun getEpisode(episodeNum: Int): Int? {
         return sharedViewModel.getEpisode(episodeNum)
+    }
+
+    override fun updateInputFilter(filterType: EpisodeFilterType, value: String) {
+        episodeListEpoxyController.submitList(null)
+        sharedViewModel.saveFilterEpisode(filterType,value)
+        sharedViewModel.episodeListLiveData.observe(viewLifecycleOwner) {
+            episodeListEpoxyController.submitList(it)
+        }
     }
 }

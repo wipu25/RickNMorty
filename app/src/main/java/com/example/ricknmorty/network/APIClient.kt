@@ -1,6 +1,8 @@
 package com.example.ricknmorty.network
 
 import com.example.ricknmorty.models.FilterCharacter
+import com.example.ricknmorty.models.FilterEpisode
+import com.example.ricknmorty.models.FilterLocation
 import com.example.ricknmorty.models.response.AllCharacters
 import com.example.ricknmorty.models.response.AllEpisodes
 import com.example.ricknmorty.models.response.AllLocations
@@ -32,6 +34,29 @@ class APIClient(
             filterCharacter.species,
             filterCharacter.type,
             filterCharacter.gender
+        )
+    }
+
+    suspend fun getFilterLocation(
+        page: Int,
+        filterLocation: FilterLocation
+    ) : Response<AllLocations> {
+        return  apiInterface.getFilterLocations(
+            page,
+            filterLocation.name,
+            filterLocation.type,
+            filterLocation.dimension
+        )
+    }
+
+    suspend fun getFilterEpisode(
+        page: Int,
+        filterEpisode: FilterEpisode
+    ) : Response<AllEpisodes> {
+        return apiInterface.getFilterEpisodes(
+            page,
+            filterEpisode.name,
+            filterEpisode.episode
         )
     }
 }

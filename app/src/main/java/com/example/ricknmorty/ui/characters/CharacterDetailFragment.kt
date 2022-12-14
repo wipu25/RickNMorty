@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.example.ricknmorty.arch.EpisodeFilterType
 import com.example.ricknmorty.arch.EpisodeListInterface
 import com.example.ricknmorty.arch.RickNMortyViewModel
 import com.example.ricknmorty.databinding.FragmentCharacterBinding
@@ -44,7 +45,7 @@ class CharacterDetailFragment : Fragment(), EpisodeListInterface {
         return sharedViewModel.getEpisode(episodeNum)
     }
 
-//    override fun getSeason(episodeNum: Int): Int? {
-//        return sharedViewModel.getSeason(episodeNum)
-//    }
+    override fun updateInputFilter(filterType: EpisodeFilterType, value: String) {
+//        TODO("Not yet implemented")
+    }
 }
