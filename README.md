@@ -19,7 +19,5 @@ API https://rickandmortyapi.com/
 
 
 
-https://user-images.githubusercontent.com/43128850/210698446-90a44288-8f55-447d-b02f-15b35dda2d76.mp4
-
-
+https://user-images.githubusercontent.com/43128850/210698635-fb051d8a-3f11-4627-9c6c-75b94dfbc08d.mp4
 
