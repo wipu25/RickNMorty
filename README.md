@@ -18,5 +18,8 @@ API https://rickandmortyapi.com/
 3. Navigate to character detail when tap on character list item
 
 
-https://user-images.githubusercontent.com/43128850/210698278-4ddf0785-f004-43f3-87ae-df5df63d98d8.mp4
+
+https://user-images.githubusercontent.com/43128850/210698446-90a44288-8f55-447d-b02f-15b35dda2d76.mp4
+
+
 
